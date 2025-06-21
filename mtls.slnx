@@ -2,4 +2,7 @@
   <Folder Name="/broker/">
     <Project Path="broker/mtls.broker/mtls.broker.csproj" />
   </Folder>
+  <Folder Name="/worker/">
+    <Project Path="worker/mtls.worker/mtls.worker.csproj" />
+  </Folder>
 </Solution>

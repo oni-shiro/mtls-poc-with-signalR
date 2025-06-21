@@ -1,0 +1,6 @@
+@mtls.worker_HostAddress = http://localhost:5160
+
+GET {{mtls.worker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
