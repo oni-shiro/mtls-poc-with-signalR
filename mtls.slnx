@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/broker/">
+    <Project Path="broker/mtls.broker/mtls.broker.csproj" />
+  </Folder>
+</Solution>

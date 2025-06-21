@@ -1,0 +1,6 @@
+@mtls.broker_HostAddress = http://localhost:5273
+
+GET {{mtls.broker_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
