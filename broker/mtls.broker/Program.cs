@@ -34,7 +34,8 @@ builder.WebHost.ConfigureKestrel(serverops =>
             );
 
             chain.ChainPolicy.ExtraStore.Add(rootCertificate);
-
+            
+            // Currently not checking revocation, needs to figure out how to do it properly offline
             chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
             chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
 
