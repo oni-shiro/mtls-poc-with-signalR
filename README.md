@@ -1,6 +1,10 @@
 # mtls-poc-with-signalR
 mtls-poc-with-signalR
 
+# Resources
+- [Dotnet Certificate based auth](https://learn.microsoft.com/en-us/aspnet/core/security/authentication/certauth?view=aspnetcore-9.0)
+- [SelfSignCertificate Documentation](https://learn.microsoft.com/en-us/powershell/module/pki/new-selfsignedcertificate?view=windowsserver2025-ps)
+
 # Generating Certificates
 Here we are generating one root certificate that will work as local CA and that needs to be added to the trusted store after generating.
 ```Powershell
@@ -76,9 +80,6 @@ $workerCert = New-SelfSignedCertificate `
 Export-Certificate -Cert $workerCert -FilePath "$certPath\worker.cer"
 Export-PfxCertificate -Cert $workerCert -FilePath "$certPath\worker.pfx" -Password (ConvertTo-SecureString -String "password" -Force -AsPlainText)
 ```
-## Resource
-[SelfSignCertificate Documentation](https://learn.microsoft.com/en-us/powershell/module/pki/new-selfsignedcertificate?view=windowsserver2025-ps)
-
 ## Point of Concerns
 - Need to figure out better format to export the certificates i.e pem file or something.
 - Need to figure out how to automate this where for broker the `DnsName` is picked depending on the machine it is getting installed
