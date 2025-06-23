@@ -3,7 +3,7 @@ mtls-poc-with-signalR
 
 # Generating Certificates
 Here we are generating one root certificate that will work as local CA and that needs to be added to the trusted store after generating.
-```
+```Powershell
 $rootCert = New-SelfSignedCertificate `
     -Subject "CN=MyRootCA" `
     -KeyExportPolicy Exportable `
@@ -23,12 +23,12 @@ Export-PfxCertificate -Cert $rootCert -FilePath "$certPath\rootCA.pfx" -Password
 
 ```
 Add it to the trusted store
-```
+```Powershell
 Import-Certificate -FilePath ".\security\certs\rootCA.cer" -CertStoreLocation "Cert:\LocalMachine\Root"
 ```
 After this we are generating the certificates for broker and worker with `Signer` as `$rootCert`
 
-```
+```Powershell
 # ============================
 # 🔵 2. Create Broker (Server) Cert
 # ============================
@@ -87,7 +87,7 @@ Export-PfxCertificate -Cert $workerCert -FilePath "$certPath\worker.pfx" -Passwo
 
 # Broker code (Server side certificate)   
 ## Configure Kestrel to load the certificate
-```
+```C#
         var certificate = new X509Certificate2(
             @"..\..\security\certs\broker.pfx",
             "password",
@@ -106,7 +106,7 @@ Export-PfxCertificate -Cert $workerCert -FilePath "$certPath\worker.pfx" -Passwo
 - Require further discussion
 
 ## Add validation for incoming client certificate
-```
+```C#
         https.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
         https.ClientCertificateValidation = (certificate, chain, errors) =>
         {
@@ -136,7 +136,7 @@ Export-PfxCertificate -Cert $workerCert -FilePath "$certPath\worker.pfx" -Passwo
 # Worker(Client) side configuration
 
 ## Configure http client to embed client certificate
-```
+```C#
 
             var certificate = new X509Certificate2(
                 @"..\..\security\certs\worker.pfx",
@@ -147,7 +147,7 @@ Export-PfxCertificate -Cert $workerCert -FilePath "$certPath\worker.pfx" -Passwo
             handler.ClientCertificates.Add(certificate);
 ```
 ## Define a server validation custom callback
-```
+```C#
 
             handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
             {
